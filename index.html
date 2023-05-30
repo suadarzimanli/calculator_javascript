@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Unusual Calculator</title>
+    <link rel="icon" href="calcproj.png" type="image/x-icon">
+
+    <style>
+        body 
+        {
+            background: linear-gradient(to right, #f4f1f3, #000000);
+            color: white;
+            font-family: "Courier New", Italic, 20px;
+            font-size: 20px;
+        }
+        
+        .container 
+        {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .header 
+        {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .textfield 
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #111;
+            color: white;
+            border: none;
+        }
+
+        input[type="text"] 
+        {
+            font-family: "Courier New", Courier, monospace;
+            font-style: italic;
+            font-size: 20px;
+        }
+        
+        .result-textfield 
+        {
+            width: 100%;
+            padding: 10px;
+            background-color: #111;
+            color: white;
+            border: none;
+            font-style: italic;
+        }
+
+        .textfield-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .operation-select 
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .button 
+        {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .button:hover 
+        {
+            background-color: #45a049;
+        }
+        
+        .color-input 
+        {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .picture 
+        {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transform: rotate(180deg);
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            Unusual Calculator
+        </div>
+
+        <input type="text" class="textfield" id="arguments" placeholder="Enter numbers">
+        <select class="operation-select" id="operation">
+            <option value="sum">∑ Sum</option>
+            <option value="product">∏ Product</option>
+            <option value="max">&gt; Maximum</option>
+            <option value="min">&lt; Minimum</option>
+        </select>
+        <button class="button" onclick="calculate()">Launch</button>
+        <input type="text" class="result-textfield" id="result" readonly>
+
+        <!-- Random number generator button -->
+        <button class="button" onclick="generateRandomNumbers()">Generate Random Numbers</button>
+        
+        <hr>
+        
+        <div class="color-picker">
+            <label for="foreground">Foreground Color:</label>
+            <input type="color" id="foreground" />
+        </div>
+
+        <div class="color-picker">
+            <label for="background">Background Color:</label>
+            <input type="color" id="background" />
+        </div>
+
+    </div>
+
+    <img src="calcproj.png" alt="Picture" class="picture">
+
+    <script>
+        function calculate() 
+        {
+            var argumentsInput = document.getElementById("arguments").value;
+            var operation = document.getElementById("operation").value;
+            var result = 0;
+
+            // Split the input arguments by spaces
+            var argumentsArray = argumentsInput.split(" ");
+
+            // Remove any extra spaces or empty values
+            argumentsArray = argumentsArray.filter(function (arg) 
+            {
+                return arg !== "";
+            });
+
+            // Convert each argument to an integer
+            var numbers = argumentsArray.map(function (arg) 
+            {
+                return parseInt(arg);
+            });
+
+            // Perform the selected operation
+            switch (operation) 
+            {
+                case "sum":
+                    result = numbers.reduce(function (acc, num) 
+                    {
+                        return acc + num;
+                    }, 0);
+                    break;
+                case "product":
+                    result = numbers.reduce(function (acc, num) 
+                    {
+                        return acc * num;
+                    }, 1);
+                    break;
+                case "max":
+                    result = Math.max.apply(null, numbers);
+                    break;
+                case "min":
+                    result = Math.min.apply(null, numbers);
+                    break;
+            }
+
+            // Display the result
+            document.getElementById("result").value = result;
+        }
+
+        function generateRandomNumbers() 
+        {
+            var argumentsInput = "";
+
+            // Generate 10 random integers and add them to the arguments input
+            for (var i = 0; i < 10; i++) 
+            {
+                var randomNumber = Math.floor(Math.random() * 10);
+                argumentsInput += randomNumber + " ";
+            }
+
+            // Update the arguments textfield with the generated numbers
+            document.getElementById("arguments").value = argumentsInput.trim();
+        }
+
+        function changeTextColor() 
+        {
+            var textColor = document.getElementById("foreground-color").value;
+            var textfields = document.querySelectorAll(".textfield, .result-textfield");
+            for (var i = 0; i < textfields.length; i++) 
+            {
+                textfields[i].style.color = textColor;
+            }
+        }
+
+        function changeColor() 
+        {
+            const foregroundColor = document.getElementById("foreground").value;
+            const backgroundColor = document.getElementById("background").value;
+
+            const textFields = document.querySelectorAll("input[type='text']");
+            textFields.forEach((textField) => 
+            {
+                textField.style.color = foregroundColor;
+                textField.style.backgroundColor = backgroundColor;
+            });
+        }
+
+        const colorInputs = document.querySelectorAll(".color-picker input[type='color']");
+        colorInputs.forEach((colorInput) => 
+        {
+          colorInput.addEventListener("input", changeColor);
+        });
+
+    </script>
+</body>
+</html>
