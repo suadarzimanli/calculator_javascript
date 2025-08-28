@@ -37,9 +37,6 @@ You can also generate a set of random numbers by clicking the "Generate Random N
 
 Contributions to the Unusual Calculator project are welcome. If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-## License 
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 
 
