@@ -24,7 +24,6 @@ You can also generate a set of random numbers by clicking the "Generate Random N
 ## Usage
 
 1. Clone the repository:
-git clone https://github.com/your-username/repository-name.git
 
 2. Open the index.html file in your preferred web browser.
 
